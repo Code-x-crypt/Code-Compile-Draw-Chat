@@ -1,0 +1,41 @@
+---
+- name: Deploy application to remote
+
+  hosts: all
+
+  tasks:
+    - name: Pull back-end image
+
+      docker_image:
+        name: rajbhatti/wcc-backend:latest
+
+        source: pull
+
+    - name: Pull front-end image
+
+      docker_image:
+        name: rajbhatti/wcc-frontend:latest
+
+        source: pull
+
+    - name: Create back-end container
+
+      docker_container:
+        name: wcc-backend
+
+        image: rajbhatti/wcc-backend
+
+        ports:
+          - "4000:4000"
+
+    - name: Create front-end container
+
+      docker_container:
+        name: wcc-frontend
+
+        image: rajbhatti/wcc-frontend
+
+        interactive: true
+
+        ports:
+          - "3000:3000"
